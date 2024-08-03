@@ -47,7 +47,7 @@ do
 
     Tabs.Main:AddButton({
         Title = "Fearless Dash",
-        Description = "Customized Moveset",
+        Description = "",
         Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/sekanua/obsidenhub/main/Dash"))()
             
@@ -56,13 +56,69 @@ do
 
 
 
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+       local invis = false
+    local Toggle = Tabs.Main:AddToggle("CharacterOffset", {Title = "Invisibility", Description = "Turns you semi-invisible. You'll be visible when you are ragdolled.", Default = false })
 
-    Toggle:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
+    Toggle:OnChanged(function(bool)
+
+        invis = bool
+        game.Players.LocalPlayer.Character.CharacterHandler.Client.RunContext = "Server"
+        game.Players.LocalPlayer.Character.CharacterHandler.Client.RunContext = "Legacy"
+        local char = game.Players.LocalPlayer.Character
+        if char and bool == true then
+            for i,v in pairs(char:GetChildren()) do
+                if v:IsA("BasePart") and v.Name:lower() ~= "humanoidrootpart" and not v.Name:lower():find("hitbox") then
+                    v.Transparency = 0.5
+                end
+            end
+        elseif char and bool == false then
+            for i,v in pairs(char:GetChildren()) do
+                if v:IsA("BasePart") and v.Name:lower() ~= "humanoidrootpart" and not v.Name:lower():find("hitbox") then
+                    v.Transparency = 0
+                end
+            end
+        end
     end)
 
-    Options.MyToggle:SetValue(false)
+    spawn(function()
+        spawn(function()
+            while task.wait() do
+                local char = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+                if char and invis == true then
+                    for i,v in pairs(char:GetChildren()) do
+                        if v:IsA("BasePart") and v.Name:lower() ~= "humanoidrootpart" and not v.Name:lower():find("hitbox") then
+                            v.Transparency = 0.5
+                        end
+                    end
+                end
+            end
+        end)
+        local RunService = game:GetService("RunService")
+        RunService.Heartbeat:Connect(function()
+            local char = game.Players.LocalPlayer.Character
+            local root = char and char:WaitForChild("HumanoidRootPart", 1)
+            local humanoid = char and char:FindFirstChildWhichIsA("Humanoid")
+            if char and root and humanoid and invis == true then
+                local old = {cframe = root.CFrame, cameraoffset = humanoid.CameraOffset}
+                root.CFrame = root.CFrame * CFrame.Angles(0,0,math.rad(180))
+                humanoid.CameraOffset = Vector3.new(0,-3.23,0)
+
+                local id = "rbxassetid://13633468484"
+                local anim = Instance.new("Animation")
+                anim.AnimationId = id
+                loaded = humanoid.Animator:LoadAnimation(anim)
+                loaded.Priority = Enum.AnimationPriority.Action4
+                loaded:Play()
+                loaded.TimePosition = 4
+                loaded:AdjustSpeed(0)
+                RunService.RenderStepped:Wait()
+                loaded:Stop()
+
+                humanoid.CameraOffset = old.cameraoffset
+                root.CFrame = old.cframe
+            end
+        end)
+    end)
 
 
     
