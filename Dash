@@ -122,8 +122,8 @@ local changeAnim = function(OGAnim, NewAnim, NewAnimSpeed, NewAnimTPos)
             
             changeAnim(15955393872 ,16310343179)
 
-  
-            local function callback(Text)
+
+local function callback(Text)
             end
              
             local NotificationBindable = Instance.new("BindableFunction")
@@ -131,41 +131,9 @@ local changeAnim = function(OGAnim, NewAnim, NewAnimSpeed, NewAnimTPos)
              
             game.StarterGui:SetCore("SendNotification", {
                 Title = "DASH";
-                Text = "MOVESET LOADED made by the Obsidian Team";
+                Text = "MOVESET MADE BY OBSIDIEN TEAM";
                 Duration = "5";
                 Callback = NotificationBindable;
             })
 
   
-  
-            local changeAnim = function(OGAnim, NewAnim, NewAnimSpeed, NewAnimTPos)
-                local player = game.Players.LocalPlayer
-                    local character = player.Character or player.CharacterAdded:Wait()
-                    local humanoid = character:WaitForChild("Humanoid")
-                    
-                    humanoid.AnimationPlayed:Connect(function(d)
-                if d.Animation.AnimationId == "rbxassetid://"..tostring(OGAnim) then
-                d:Stop()
-                
-                        local pchar= game.Players.LocalPlayer.Character
-                        local AnimationId = tostring(NewAnim)
-                        local Anim = Instance.new("Animation")
-                        Anim.AnimationId = "rbxassetid://"..AnimationId
-                        local k = pchar:FindFirstChildOfClass('Humanoid'):LoadAnimation(Anim)
-                        k:Play()
-                if NewAnimSpeed then
-                k:AdjustSpeed(NewAnimSpeed)
-                end
-                if NewAnimTPos then
-                k.TimePosition = NewAnimTPos
-                end
-                       end
-                end)
-                end
-                
-                
-                
-                
-                
-                
-                changeAnim(12447707844, 17464923657)
