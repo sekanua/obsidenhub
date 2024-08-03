@@ -168,6 +168,34 @@ end
 
 
 
-changeAnim(12447707844, 17464923657)
+changeAnim(12447707844, 12447707844)
+
+
+
+
+local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    humanoid.AnimationPlayed:Connect(function(d)
+if d.Animation.AnimationId == "rbxassetid://12447707844" then
+d:Stop()
+
+        local pchar= game.Players.LocalPlayer.Character
+        local AnimationId = "17464923657"
+        local Anim = Instance.new("Animation")
+        Anim.AnimationId = "rbxassetid://"..AnimationId
+        local k = pchar:FindFirstChildOfClass('Humanoid'):LoadAnimation(Anim)
+        k:Play()
+task.wait(0.2)
+local args = {
+    [1] = "Bring it on.",
+    [2] = "All"
+}
+
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+
+       end
+end)
 
   
