@@ -46,7 +46,7 @@ do
 
     Tabs.Main:AddButton({
         Title = "Fearless Dash",
-        Description = "",
+        Description = "Moveset for Saitama",
         Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/sekanua/obsidenhub/main/Dash"))()
             
